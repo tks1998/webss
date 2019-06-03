@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [
+    "/djangoss/djangoss/home/static"
+]
 
 # Application definition
 

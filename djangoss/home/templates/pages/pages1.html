@@ -1,8 +1,43 @@
 {% extends "pages/base.html" %}
-
+{% load static %}
 {% block title %}Page1{% endblock %}
-
+{% block style %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
-<br><br>
-<p>Trang 1</p>
+
+<div class="container">
+        <div class="d-flex justify-content-center">
+          <div class="searchbar">
+            <input class="search_input" type="text" (keyup.enter)="input($event.target.value)" placeholder="Search...">
+            <div class="search_icon">
+                <i class="fas fa-search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  <br>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3 mb-4" id="ttsp">
+                      <div class="card shadow-sm">
+                              <a href="./2" target="_blank"> 
+                                      <img width="100%" height="250" src="link hình ảnh" alt="Tên sản phẩm">
+                              </a>
+                      <div class="container">
+                          <a href="./2" class="card-link text-body">
+                              <h5 data-toggle="tooltip" data-placement="bottom" [title]=data.ProductName class="card-title text-truncate">Tên sản phẩm</h5>
+                          </a>
+                          <hr>
+                          <h5 style="color:#16a085;" class="text-right">
+                            Giá sản phẩm
+                          </h5>
+                      </div>
+                      </div>
+              </div>
+          <!-- @endforeach -->
+        </div>
+    </div>
+
 {% endblock %}
