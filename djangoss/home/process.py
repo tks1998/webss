@@ -8,6 +8,7 @@ from collections import Counter
 
 x = input("Nhap cau truy van: ")
 
+
 def process(x):
 
     data_path = general.check_data_path("datas.json")
@@ -19,12 +20,12 @@ def process(x):
         ProductName.append(i["ProductName"])
     corpus = list()
     for name in ProductName:
-        terms = tokenizing.get_terms(name,lemmatize=False, stemming=False)
+        terms = tokenizing.get_terms(name, lemmatize=False, stemming=False)
         bag_of_words = Counter(terms)
         corpus.append(bag_of_words)
 
     #xu li input
-    x_ = tokenizing.get_terms(x,lemmatize=False, stemming=False)
+    x_ = tokenizing.get_terms(x, lemmatize=False, stemming=False)
     bag = Counter(x_)
     corpus.append(bag)
 
@@ -39,7 +40,7 @@ def process(x):
     k = len(represent_tfidf) - 1
     b = np.array(represent_tfidf[k])
     normb = np.linalg.norm(b)
-    for i in range(0,k):
+    for i in range(0, k):
         a = np.array(represent_tfidf[i])
         dot = np.dot(a, b)
         norma = np.linalg.norm(a)
@@ -48,19 +49,25 @@ def process(x):
 
     #output
     z = copy.deepcopy(cosi)
-    z_ = z.sort(reverse = True)
+    z.sort(reverse=True)
     na = set()
-    for i in range(0,10):
-            for j in range(0,len(cosi)):
+
+    n = len(bag)
+    for i in range(0, 10):
+            for j in range(0, len(cosi)):
                     if (z[i] == cosi[j]):
+                        if (n == 1 and z[i] > 0.2):
+                            na.add(j)
+                        if (n > 1 and z[i] > 0.5):
                             na.add(j)
 
+
     hi = list(na)
-    Price = list()  
+    Price = list()
     for i in data:
         Price.append(i["Price"])
 
-    Company = list() 
+    Company = list()
     for i in data:
         Company.append(i["Company"])
 
@@ -69,9 +76,11 @@ def process(x):
         Distributor.append(i["Distributor"])
 
     for i in hi:
-        print (ProductName[i])
-        print (Price[i])
-        print (Company[i])
-        print (Distributor[i])
-    
+        print("======")
+        print(ProductName[i])
+        print(Price[i])
+        print(Company[i])
+        print(Distributor[i])
+
+
 process(x)
