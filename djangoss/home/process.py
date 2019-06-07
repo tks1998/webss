@@ -1,18 +1,27 @@
 import pandas as pd
 import numpy as np
-import copy
-from . import general
 from . import tokenizing
 from . import weight
+
 import json
 from collections import Counter
+def sort_by_me(a):
+    return a["cost"]
+
 def process_search(p):
+    x = "";
+    for i in p:
+        x = x + i
+    #x = "iPhone Xs Max";
+    try:
+        with open('/home/sen/Desktop/hoc tap/webss/djangoss/home/datas1.json') as json_dataset:
+            dataset = json.load(json_dataset)
+    except  FileNotFoundError:
+        json_data = {"test":[]} 
+    data=[]
+    for i in dataset:
+        data.append(dataset[i])
  
-    json_dataset = open('/home/sen/Desktop/hoc tap/webss/djangoss/home/datas.json')
-    data1 = json.load(json_dataset)
-    dataset = json.dumps(data1)
-    return {}
-    data = [eval(i) for i in dataset]
     ProductName = list()
     for i in data:
         ProductName.append(i["ProductName"])
@@ -38,37 +47,24 @@ def process_search(p):
     k = len(represent_tfidf) - 1
     b = np.array(represent_tfidf[k])
     normb = np.linalg.norm(b)
+    ValueOfItem = []
+    Get_data = []
     for i in range(0,k):
         a = np.array(represent_tfidf[i])
         dot = np.dot(a, b)
         norma = np.linalg.norm(a)
         cos = dot / (norma * normb)
-        cosi.append(cos)
-
-    #output
-    z = copy.deepcopy(cosi)
-    z_ = z.sort(reverse = True)
-    na = set()
-    for i in range(0,10):
-            for j in range(0,len(cosi)):
-                    if (z[i] == cosi[j]):
-                            na.add(j)
-
-    hi = list(na)
-    Price = list()  
-    for i in data:
-        Price.append(i["Price"])
-
-    Company = list() 
-    for i in data:
-        Company.append(i["Company"])
-
-    Distributor = list()
-    for i in data:
-        Distributor.append(i["Distributor"])
-    return {
-        'ProductName' :ProductName[0],
-        'Price' :Price[0],
-        'Company':Company[0],
-        'Distributor':Distributor[0]
-    }
+        Get_data.append({
+            "cost" : cos,
+            "ProductName"   :  data[i]["ProductName"],
+            "Price"         :  data[i]["Price"],
+            "Company"       :  data[i]["Company"],
+            "Distributor"   :  data[i]["Distributor"],
+            "image"         :  data[i]["image"]
+        })
+    Get_data.sort(key=sort_by_me , reverse = True)
+    number = 2; 
+    result = {"item":[]}
+    for i in range(0,number):
+        result["item"].append(Get_data[i])
+    return result

@@ -4,7 +4,9 @@
 
 {% block content %}
 <h1>{{research}}</h1>
-<div class="container mt-5">
+{% for detail in item %}
+
+<div class="container mt-5">  
         <div class="row">
           <div class="col-md-6 d-flex">
             <img width="100%" src="https://cdn.tgdd.vn/Products/Images/42/190322/iphone-xs-max-256gb-white-600x600.jpg">
@@ -14,24 +16,24 @@
                   <tbody>
                     <tr>
                       <th scope="row">Tên sản phẩm</th>
-                      <td>Mark</td>
+                      <td>{{detail.ProductName}}</td>
                     </tr>
                     <tr>
                       <th scope="row">Nhà sản xuất</th>
-                      <td>Jacob</td>
+                      <td>{{detail.Company}}</td>
                     </tr>
                     <tr>
                       <th scope="row">Nhà phân phối</th>
-                      <td>Larry</td>
+                      <td>{{detail.Distributor}}</td>
                     </tr>
                     <tr>
                       <th scope="row">Giá sản phẩm</th>
-                      <td class="text-primary">Larry</td>
+                      <td class="text-primary">{{detail.Price}}</td>
                       </tr>
                   </tbody>
                 </table>
           </div>
         </div>
     </div>
-
+{% endfor %}
 {% endblock %}
