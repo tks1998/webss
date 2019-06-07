@@ -1,18 +1,17 @@
 import pandas as pd
 import numpy as np
 import copy
-import general
-import tokenizing
-import weight
+from . import general
+from . import tokenizing
+from . import weight
+import json
 from collections import Counter
-
-x = input("Nhap cau truy van: ")
-
-def process(x):
-
-    data_path = general.check_data_path("datas.json")
-
-    dataset = open(data_path)
+def process_search(p):
+ 
+    json_dataset = open('/home/sen/Desktop/hoc tap/webss/djangoss/home/datas.json')
+    data1 = json.load(json_dataset)
+    dataset = json.dumps(data1)
+    return {}
     data = [eval(i) for i in dataset]
     ProductName = list()
     for i in data:
@@ -67,11 +66,9 @@ def process(x):
     Distributor = list()
     for i in data:
         Distributor.append(i["Distributor"])
-
-    for i in hi:
-        print (ProductName[i])
-        print (Price[i])
-        print (Company[i])
-        print (Distributor[i])
-    
-process(x)
+    return {
+        'ProductName' :ProductName[0],
+        'Price' :Price[0],
+        'Company':Company[0],
+        'Distributor':Distributor[0]
+    }
